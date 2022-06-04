@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function getCardData(data) {
-
         const checkNumber = document.querySelector('.js--card-number');
         checkNumber.addEventListener('input', function () {
             this.value = this.value.replace(/\D/g, "");
@@ -17,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('.js--card-value').innerHTML =
                 `${cardNumber.substring(0, 4)} ${cardNumber.substring(4, 8)}
                 ${cardNumber.substring(8, 12)} ${cardNumber.substring(12, 16)}`;
-                checkData();
+            checkFields();
         });
 
         data.number.addEventListener('change', function () {
@@ -28,13 +27,16 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })
 
+        const checkHolder = document.querySelector('.js--card-name');
+        checkHolder.addEventListener('input', function () {
+            this.value = this.value.replace(/\d/g, '');
+        });
+
         data.cardHolder.addEventListener('input', function () {
             const cardName = this.value;
             this.value = cardName.replace(/\d/g, '');
-            if (cardName.length > 2) {
-                document.querySelector('.js--card-holder').innerHTML = cardName;
-                checkData();
-            }
+            document.querySelector('.js--card-holder').innerHTML = cardName;
+            checkFields();
         });
 
         data.cardHolder.addEventListener('change', function () {
@@ -49,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const monthData = this.value;
             if (monthData) {
                 document.querySelector('.js--month-data').innerHTML = `${monthData} /`;
-                checkData();
+                checkFields();
             }
 
         });
@@ -58,13 +60,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const yearData = this.value;
             if (yearData) {
                 document.querySelector('.js--year-data').innerHTML = yearData;
-                checkData();
+                checkFields();
             }
         });
 
         const checkCVV = document.querySelector('.js--cvv');
         checkCVV.addEventListener('input', function () {
             this.value = this.value.replace(/\D/g, "");
+            checkFields();
         });
 
         data.cvv.addEventListener('change', function () {
@@ -72,17 +75,16 @@ document.addEventListener('DOMContentLoaded', function () {
             if (cvvNumber.length < 3) {
                 alert("Значение CVV должно быть не меньше 3-х символов");
             }
-            checkData();
-
         });
 
-        function checkData() {
+        function checkFields() {
             const button = document.querySelector('.form__button');
-            let valid = false;
-            for(let key in data) {
-                valid = data[key].value.length !== 0;
-            }
-            if (valid) {
+            const number = document.querySelector('.js--card-number');
+            const holder = document.querySelector('.js--card-name');
+            const month = document.querySelector('.js--month');
+            const year = document.querySelector('.js--year');
+            const cvv = document.querySelector('.js--cvv');
+            if (number.value.length !== 0 && holder.value.length !== 0 && month.value.length !== 0 && year.value.length !== 0 && cvv.value.length !== 0 ) {
                 button.disabled = false;
             }
         }
