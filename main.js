@@ -19,14 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
             checkFields();
         });
 
-        data.number.addEventListener('change', function () {
-            const cardValue = this.value;
-            const check =  document.querySelector('.js--card-number');
-            if (cardValue.length < 16) {
-                alert('Номер карты должен содержать 16 цифр');
-            }
-        })
-
         const checkHolder = document.querySelector('.js--card-name');
         checkHolder.addEventListener('input', function () {
             this.value = this.value.replace(/\d/g, '');
@@ -39,13 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
             checkFields();
         });
 
-        data.cardHolder.addEventListener('change', function () {
-            const valueCardName = this.value;
-            const checkCardName =  document.querySelector('.js--card-name');
-            if (valueCardName.length < 3) {
-                alert('Имя должно содержать минимум 2 буквы');
-            }
-        })
 
         data.month.addEventListener('input', function () {
             const monthData = this.value;
@@ -70,13 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
             checkFields();
         });
 
-        data.cvv.addEventListener('change', function () {
-            const cvvNumber = this.value;
-            if (cvvNumber.length < 3) {
-                alert("Значение CVV должно быть не меньше 3-х символов");
-            }
-        });
-
         function checkFields() {
             const button = document.querySelector('.form__button');
             const number = document.querySelector('.js--card-number');
@@ -84,8 +62,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const month = document.querySelector('.js--month');
             const year = document.querySelector('.js--year');
             const cvv = document.querySelector('.js--cvv');
-            if (number.value.length !== 0 && holder.value.length !== 0 && month.value.length !== 0 && year.value.length !== 0 && cvv.value.length !== 0 ) {
+            if (number.value.length === 16 && holder.value.length > 2 && month.value.length !== 0 && year.value.length !== 0 && cvv.value.length > 2) {
                 button.disabled = false;
+            } else {
+                button.disabled = true;
             }
         }
 
